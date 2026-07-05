@@ -1,0 +1,35 @@
+{% extends "public/base.html" %}
+{% block title %}Galeri{% endblock %}
+{% block content %}
+<section class="bg-blue-600 py-16">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <h1 class="text-3xl font-bold text-white mb-3">Galeri</h1>
+    <p class="text-blue-100">Dokumentasi kegiatan dan momen berharga</p>
+  </div>
+</section>
+<section class="py-8">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex flex-wrap gap-2 mb-8 justify-center">
+      <a href="{{ url_for('public.galeri') }}" class="px-4 py-2 rounded-xl text-sm font-medium {% if not selected_kategori %}bg-blue-600 text-white{% else %}bg-gray-100 text-gray-600 hover:bg-gray-200{% endif %}">Semua</a>
+      {% for k in kategori_list %}
+      <a href="{{ url_for('public.galeri', kategori=k) }}" class="px-4 py-2 rounded-xl text-sm font-medium {% if selected_kategori==k %}bg-blue-600 text-white{% else %}bg-gray-100 text-gray-600 hover:bg-gray-200{% endif %}">{{ k|title }}</a>
+      {% endfor %}
+    </div>
+    <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {% for g in galeri_list %}
+      <div class="group relative rounded-2xl overflow-hidden aspect-square">
+        <img src="{{ url_for('static', filename='uploads/'+g.image) }}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all">
+          <div class="absolute bottom-0 p-4 text-white">
+            <p class="font-medium">{{ g.title }}</p>
+            <p class="text-xs text-white/70">{{ g.kategori }}</p>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-span-full text-center py-12 text-gray-400">Belum ada galeri</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

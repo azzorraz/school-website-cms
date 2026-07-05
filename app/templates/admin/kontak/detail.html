@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% block title %}Detail Pesan{% endblock %}
+{% block page_title %}Detail Pesan Kontak{% endblock %}
+{% block content %}
+<div class="max-w-2xl animate-fade-in">
+  <div class="card p-6">
+    <div class="space-y-4">
+      <div><label class="text-xs text-gray-400">Nama</label><p class="font-medium">{{ kontak.nama }}</p></div>
+      <div><label class="text-xs text-gray-400">Email</label><p>{{ kontak.email }}</p></div>
+      {% if kontak.no_hp %}<div><label class="text-xs text-gray-400">No HP</label><p>{{ kontak.no_hp }}</p></div>{% endif %}
+      <div><label class="text-xs text-gray-400">Subjek</label><p class="font-medium">{{ kontak.subjek }}</p></div>
+      <div><label class="text-xs text-gray-400">Pesan</label><p class="text-gray-600 whitespace-pre-wrap">{{ kontak.pesan }}</p></div>
+      <div><label class="text-xs text-gray-400">Tanggal</label><p>{{ kontak.created_at.strftime('%d/%m/%Y %H:%M') }}</p></div>
+    </div>
+    <div class="mt-6 pt-4 border-t">
+      <a href="mailto:{{ kontak.email }}?subject=Re: {{ kontak.subjek }}" class="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-blue-700">
+        <i class="fas fa-reply mr-1"></i> Balas via Email
+      </a>
+      <a href="{{ url_for('admin.kontak_index') }}" class="ml-3 px-6 py-2.5 rounded-xl font-medium border border-gray-200 hover:bg-gray-50">Kembali</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

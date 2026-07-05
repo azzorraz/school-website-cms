@@ -1,0 +1,34 @@
+{% extends "admin/base.html" %}
+{% block title %}Pesan Kontak{% endblock %}
+{% block page_title %}Pesan Kontak{% endblock %}
+{% block content %}
+<div class="mb-5">
+  <p class="text-gray-500">{{ kontak_list|length }} pesan ({{ kontak_list|selectattr('is_sameas', false)|list|length }} belum dibaca)</p>
+</div>
+<div class="card overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="bg-gray-50 border-b">
+      <tr><th class="text-left p-4 font-medium text-gray-600">Nama</th><th class="text-left p-4 font-medium text-gray-600">Subjek</th><th class="text-left p-4 font-medium text-gray-600">Tanggal</th><th class="text-left p-4 font-medium text-gray-600">Status</th><th class="text-center p-4 font-medium text-gray-600">Aksi</th></tr>
+    </thead>
+    <tbody>
+      {% for k in kontak_list %}
+      <tr class="border-b hover:bg-gray-50 {% if not k.is_read %}bg-blue-50/30{% endif %}">
+        <td class="p-4 font-medium">{{ k.nama }}</td>
+        <td class="p-4">{{ k.subjek }}</td>
+        <td class="p-4 text-gray-500">{{ k.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
+        <td class="p-4">
+          {% if k.is_read %}<span class="text-green-500 text-xs">Dibaca</span>
+          {% else %}<span class="text-blue-600 text-xs font-medium">Baru</span>{% endif %}
+        </td>
+        <td class="p-4 text-center">
+          <a href="{{ url_for('admin.kontak_baca', id=k.id) }}" class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-eye"></i></a>
+          <a href="{{ url_for('admin.kontak_hapus', id=k.id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Hapus?')"><i class="fas fa-trash"></i></a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="p-8 text-center text-gray-400">Belum ada pesan</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

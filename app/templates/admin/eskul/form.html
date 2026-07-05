@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+{% block title %}{% if eskul %}Edit{% else %}Tambah{% endif %} Ekstrakurikuler{% endblock %}
+{% block page_title %}{% if eskul %}Edit Ekstrakurikuler{% else %}Tambah Ekstrakurikuler Baru{% endif %}{% endblock %}
+{% block content %}
+<div class="max-w-2xl animate-fade-in">
+  <div class="card p-6">
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Ekstrakurikuler *</label>
+        <input type="text" name="name" value="{{ eskul.name if eskul else '' }}" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Pembina</label>
+        <input type="text" name="pembina" value="{{ eskul.pembina if eskul else '' }}" class="w-full px-4 py-2.5 rounded-xl border border-gray-200">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Jadwal</label>
+        <input type="text" name="jadwal" value="{{ eskul.jadwal if eskul else '' }}" placeholder="Contoh: Senin & Kamis 15:30-17:00" class="w-full px-4 py-2.5 rounded-xl border border-gray-200">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+        <textarea name="description" rows="4" class="w-full px-4 py-2.5 rounded-xl border border-gray-200">{{ eskul.description if eskul else '' }}</textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Ikon (Font Awesome)</label>
+        <input type="text" name="icon" value="{{ eskul.icon if eskul else 'fas fa-star' }}" class="w-full px-4 py-2.5 rounded-xl border border-gray-200">
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-blue-700">Simpan</button>
+        <a href="{{ url_for('admin.eskul_index') }}" class="px-6 py-2.5 rounded-xl font-medium border border-gray-200 hover:bg-gray-50">Batal</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

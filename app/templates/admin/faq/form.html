@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+{% block title %}{% if f %}Edit{% else %}Tambah{% endif %} FAQ{% endblock %}
+{% block page_title %}{% if f %}Edit FAQ{% else %}Tambah FAQ{% endif %}{% endblock %}
+{% block content %}
+<div class="max-w-2xl animate-fade-in">
+  <div class="card p-6">
+    <form method="POST" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Pertanyaan *</label>
+        <input type="text" name="pertanyaan" value="{{ f.pertanyaan if f else '' }}" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Jawaban *</label>
+        <textarea name="jawaban" rows="5" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200">{{ f.jawaban if f else '' }}</textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+          <select name="kategori" class="w-full px-4 py-2.5 rounded-xl border border-gray-200">
+            <option value="umum">Umum</option>
+            <option value="ppdb">PPDB</option>
+            <option value="akademik">Akademik</option>
+            <option value="fasilitas">Fasilitas</option>
+            <option value="biaya">Biaya</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Urutan</label>
+          <input type="number" name="position" value="{{ f.position if f else 0 }}" class="w-full px-4 py-2.5 rounded-xl border border-gray-200">
+        </div>
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-blue-700">Simpan</button>
+        <a href="{{ url_for('admin.faq_index') }}" class="px-6 py-2.5 rounded-xl font-medium border border-gray-200 hover:bg-gray-50">Batal</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

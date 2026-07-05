@@ -1,0 +1,89 @@
+{% extends "public/base.html" %}
+{% block title %}Pengumuman - {{ site_name }}{% endblock %}
+{% block meta_description %}Pengumuman dan informasi resmi dari {{ site_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="bg-gradient-to-br from-green-600 to-green-800 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <div class="inline-block px-4 py-1.5 bg-white/20 rounded-full text-white text-sm font-medium backdrop-blur-sm mb-4">
+                <i class="fas fa-bullhorn mr-1"></i> Informasi Resmi
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">Pengumuman</h1>
+            <p class="text-green-100 max-w-lg mx-auto">Informasi dan pengumuman resmi dari {{ site_name }}</p>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="space-y-4">
+            {% if pengumuman_list.items %}
+            {% for p in pengumuman_list.items %}
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all {{ 'border-l-4 border-l-red-500' if p.is_important }}">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        {% if p.is_important %}
+                        <div class="w-12 h-12 bg-red-100 text-red-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-exclamation-circle text-xl"></i>
+                        </div>
+                        {% else %}
+                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-bullhorn text-xl"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-1">
+                            {% if p.is_important %}
+                            <span class="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-0.5 rounded-full">PENTING</span>
+                            {% endif %}
+                            <span class="text-xs text-gray-400">
+                                <i class="far fa-calendar mr-1"></i> {{ p.published_at.strftime('%d %B %Y') if p.published_at else '' }}
+                            </span>
+                        </div>
+                        <h2 class="text-lg font-bold text-gray-900 mb-2">{{ p.title }}</h2>
+                        <div class="text-sm text-gray-600 leading-relaxed">
+                            {{ p.content|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="text-center py-16">
+                <div class="text-gray-300 text-6xl mb-4"><i class="fas fa-bullhorn"></i></div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Pengumuman</h3>
+                <p class="text-gray-400">Belum ada pengumuman yang dipublikasikan saat ini.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Pagination -->
+        {% if pengumuman_list.pages > 1 %}
+        <div class="mt-8 flex items-center justify-center gap-2">
+            {% if pengumuman_list.has_prev %}
+            <a href="{{ url_for('public.announcements', page=pengumuman_list.prev_num) }}" class="px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors">
+                <i class="fas fa-chevron-left mr-1"></i> Sebelumnya
+            </a>
+            {% endif %}
+            {% for page_num in pengumuman_list.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                {% if page_num %}
+                <a href="{{ url_for('public.announcements', page=page_num) }}" class="w-10 h-10 flex items-center justify-center rounded-xl text-sm font-medium transition-colors {{ 'bg-green-600 text-white' if page_num == pengumuman_list.page else 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                    {{ page_num }}
+                </a>
+                {% else %}
+                <span class="px-2 text-gray-400">...</span>
+                {% endif %}
+            {% endfor %}
+            {% if pengumuman_list.has_next %}
+            <a href="{{ url_for('public.announcements', page=pengumuman_list.next_num) }}" class="px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors">
+                Selanjutnya <i class="fas fa-chevron-right ml-1"></i>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

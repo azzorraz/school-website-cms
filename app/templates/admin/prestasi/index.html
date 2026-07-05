@@ -1,0 +1,34 @@
+{% extends "admin/base.html" %}
+{% block title %}Prestasi{% endblock %}
+{% block page_title %}Manajemen Prestasi{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-5">
+  <p class="text-gray-500">{{ prestasi_list|length }} prestasi</p>
+  <a href="{{ url_for('admin.prestasi_tambah') }}" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-blue-700">
+    <i class="fas fa-plus mr-1"></i> Tambah Prestasi
+  </a>
+</div>
+<div class="card overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="bg-gray-50 border-b">
+      <tr><th class="text-left p-4 font-medium text-gray-600">Prestasi</th><th class="text-left p-4 font-medium text-gray-600">Kategori</th><th class="text-left p-4 font-medium text-gray-600">Juara</th><th class="text-left p-4 font-medium text-gray-600">Tingkat</th><th class="text-center p-4 font-medium text-gray-600">Aksi</th></tr>
+    </thead>
+    <tbody>
+      {% for p in prestasi_list %}
+      <tr class="border-b hover:bg-gray-50">
+        <td class="p-4 font-medium">{{ p.title }}</td>
+        <td class="p-4"><span class="px-2 py-1 bg-green-50 text-green-600 rounded-lg text-xs">{{ p.kategori }}</span></td>
+        <td class="p-4">{{ p.juara or '-' }}</td>
+        <td class="p-4">{{ p.tingkat or '-' }}{% if p.tahun %} ({{ p.tahun }}){% endif %}</td>
+        <td class="p-4 text-center">
+          <a href="{{ url_for('admin.prestasi_edit', id=p.id) }}" class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-edit"></i></a>
+          <a href="{{ url_for('admin.prestasi_hapus', id=p.id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Hapus?')"><i class="fas fa-trash"></i></a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="p-8 text-center text-gray-400">Belum ada prestasi</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

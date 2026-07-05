@@ -1,0 +1,286 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8 animate-fade-in">
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-users"></i>
+            </div>
+            <span class="text-xs text-gray-400">Total</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_users }}</p>
+        <p class="text-sm text-gray-500 mt-1">Pengguna Terdaftar</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-green-100 text-green-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <span class="text-xs text-gray-400">Aktif</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.active_users }}</p>
+        <p class="text-sm text-gray-500 mt-1">Pengguna Aktif</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-eye"></i>
+            </div>
+            <span class="text-xs text-gray-400">Total</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_visitors }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total Pengunjung</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-calendar-day"></i>
+            </div>
+            <span class="text-xs text-gray-400">Hari Ini</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.visitors_today }}</p>
+        <p class="text-sm text-gray-500 mt-1">Pengunjung Hari Ini</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-newspaper"></i>
+            </div>
+            <span class="text-xs text-gray-400">Berita</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_berita }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total Berita{% if stats.berita_draft %} ({{ stats.berita_draft }} draft){% endif %}</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-green-100 text-green-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-bullhorn"></i>
+            </div>
+            <span class="text-xs text-gray-400">Penting</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_pengumuman }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total Pengumuman{% if stats.pengumuman_important %} ({{ stats.pengumuman_important }} penting){% endif %}</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-users"></i>
+            </div>
+            <span class="text-xs text-gray-400">Guru</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_guru }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total Guru ({{ stats.guru_aktif }} aktif)</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-pink-100 text-pink-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-images"></i>
+            </div>
+            <span class="text-xs text-gray-400">Galeri</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_galeri }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total Galeri</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-cyan-100 text-cyan-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-calendar"></i>
+            </div>
+            <span class="text-xs text-gray-400">Agenda</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_agenda }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total Agenda</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <span class="text-xs text-gray-400">Prestasi</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_prestasi }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total Prestasi</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-star"></i>
+            </div>
+            <span class="text-xs text-gray-400">Ekskul</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_eskul }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total Ekstrakurikuler</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <span class="text-xs text-gray-400">PPDB</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_ppdb }}</p>
+        <p class="text-sm text-gray-500 mt-1">Pendaftar{% if stats.ppdb_pending %} ({{ stats.ppdb_pending }} pending){% endif %}</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-violet-100 text-violet-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-download"></i>
+            </div>
+            <span class="text-xs text-gray-400">Download</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_download }}</p>
+        <p class="text-sm text-gray-500 mt-1">Total File</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <span class="text-xs text-gray-400">Kontak</span>
+        </div>
+        <p class="text-2xl font-bold">{{ stats.total_kontak }}</p>
+        <p class="text-sm text-gray-500 mt-1">Pesan{% if stats.kontak_unread %} ({{ stats.kontak_unread }} baru){% endif %}</p>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in" style="animation-delay: 0.1s">
+    <div class="card">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="font-semibold">Pengunjung Terbaru</h3>
+        </div>
+        <div class="p-6">
+            {% if recent_visitors %}
+            <div class="space-y-3">
+                {% for visitor in recent_visitors %}
+                <div class="flex items-center gap-3 text-sm">
+                    <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-gray-400 text-xs"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-medium text-gray-700">{{ visitor.page or '/' }}</p>
+                        <p class="text-xs text-gray-400">{{ visitor.visited_at.strftime('%d/%m %H:%M') }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-gray-400 text-sm text-center py-4">Belum ada kunjungan</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="font-semibold">Akses Cepat</h3>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-2 gap-3">
+                <a href="{{ url_for('admin.berita_tambah') }}" class="p-4 bg-blue-50 rounded-xl text-center hover:bg-blue-100 transition-colors">
+                    <i class="fas fa-newspaper text-blue-600 text-xl mb-2"></i>
+                    <p class="text-sm font-medium">Tulis Berita</p>
+                </a>
+                <a href="{{ url_for('admin.pengumuman_tambah') }}" class="p-4 bg-green-50 rounded-xl text-center hover:bg-green-100 transition-colors">
+                    <i class="fas fa-bullhorn text-green-600 text-xl mb-2"></i>
+                    <p class="text-sm font-medium">Pengumuman</p>
+                </a>
+                <a href="{{ url_for('admin.guru_tambah') }}" class="p-4 bg-indigo-50 rounded-xl text-center hover:bg-indigo-100 transition-colors">
+                    <i class="fas fa-user-plus text-indigo-600 text-xl mb-2"></i>
+                    <p class="text-sm font-medium">Tambah Guru</p>
+                </a>
+                <a href="{{ url_for('admin.galeri_tambah') }}" class="p-4 bg-pink-50 rounded-xl text-center hover:bg-pink-100 transition-colors">
+                    <i class="fas fa-image text-pink-600 text-xl mb-2"></i>
+                    <p class="text-sm font-medium">Upload Galeri</p>
+                </a>
+                <a href="{{ url_for('admin.agenda_tambah') }}" class="p-4 bg-cyan-50 rounded-xl text-center hover:bg-cyan-100 transition-colors">
+                    <i class="fas fa-calendar-plus text-cyan-600 text-xl mb-2"></i>
+                    <p class="text-sm font-medium">Buat Agenda</p>
+                </a>
+                <a href="{{ url_for('admin.prestasi_tambah') }}" class="p-4 bg-amber-50 rounded-xl text-center hover:bg-amber-100 transition-colors">
+                    <i class="fas fa-medal text-amber-600 text-xl mb-2"></i>
+                    <p class="text-sm font-medium">Tambah Prestasi</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in" style="animation-delay: 0.2s">
+    <div class="card">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-semibold">Berita Terbaru</h3>
+            <a href="{{ url_for('admin.berita_index') }}" class="text-xs text-blue-600 hover:text-blue-700">Lihat Semua</a>
+        </div>
+        <div class="p-6">
+            {% if recent_berita %}
+            <div class="space-y-3">
+                {% for b in recent_berita %}
+                <div class="flex items-center gap-3 text-sm">
+                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-newspaper text-xs"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-medium text-gray-700 truncate">{{ b.title }}</p>
+                        <p class="text-xs text-gray-400">
+                            {{ b.created_at.strftime('%d/%m/%Y') }} 
+                            {% if b.status == 'published' %}
+                            <span class="text-green-500">&#8226; Published</span>
+                            {% else %}
+                            <span class="text-yellow-500">&#8226; Draft</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-gray-400 text-sm text-center py-4">Belum ada berita</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-semibold">Pengumuman Terbaru</h3>
+            <a href="{{ url_for('admin.pengumuman_index') }}" class="text-xs text-blue-600 hover:text-blue-700">Lihat Semua</a>
+        </div>
+        <div class="p-6">
+            {% if recent_pengumuman %}
+            <div class="space-y-3">
+                {% for p in recent_pengumuman %}
+                <div class="flex items-center gap-3 text-sm">
+                    <div class="w-8 h-8 {{ 'bg-red-100 text-red-600' if p.is_important else 'bg-green-100 text-green-600' }} rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas {{ 'fa-exclamation' if p.is_important else 'fa-bullhorn' }} text-xs"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-medium text-gray-700 truncate">{{ p.title }}</p>
+                        <p class="text-xs text-gray-400">
+                            {{ p.created_at.strftime('%d/%m/%Y') }}
+                            {% if p.is_important %}<span class="text-red-500 font-medium">&#8226; Penting</span>{% endif %}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-gray-400 text-sm text-center py-4">Belum ada pengumuman</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

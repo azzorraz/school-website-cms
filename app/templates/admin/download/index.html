@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% block title %}Download{% endblock %}
+{% block page_title %}Manajemen Download{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-5">
+  <p class="text-gray-500">{{ download_list|length }} file</p>
+  <a href="{{ url_for('admin.download_tambah') }}" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-blue-700">
+    <i class="fas fa-plus mr-1"></i> Tambah File
+  </a>
+</div>
+<div class="card overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="bg-gray-50 border-b">
+      <tr><th class="text-left p-4 font-medium text-gray-600">Judul</th><th class="text-left p-4 font-medium text-gray-600">Kategori</th><th class="text-left p-4 font-medium text-gray-600">Download</th><th class="text-center p-4 font-medium text-gray-600">Aksi</th></tr>
+    </thead>
+    <tbody>
+      {% for d in download_list %}
+      <tr class="border-b hover:bg-gray-50">
+        <td class="p-4 font-medium">{{ d.title }}</td>
+        <td class="p-4"><span class="px-2 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs">{{ d.kategori }}</span></td>
+        <td class="p-4">{{ d.downloads }}x</td>
+        <td class="p-4 text-center">
+          <a href="{{ url_for('admin.download_edit', id=d.id) }}" class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-edit"></i></a>
+          <a href="{{ url_for('admin.download_hapus', id=d.id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Hapus?')"><i class="fas fa-trash"></i></a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="p-8 text-center text-gray-400">Belum ada file</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

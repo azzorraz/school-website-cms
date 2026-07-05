@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}Guru{% endblock %}
+{% block page_title %}Manajemen Guru{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-5">
+  <p class="text-gray-500">{{ guru_list|length }} guru terdaftar</p>
+  <a href="{{ url_for('admin.guru_tambah') }}" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-blue-700">
+    <i class="fas fa-plus mr-1"></i> Tambah Guru
+  </a>
+</div>
+<div class="card overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-50 border-b">
+        <tr>
+          <th class="text-left p-4 font-medium text-gray-600">Nama</th>
+          <th class="text-left p-4 font-medium text-gray-600">NIP</th>
+          <th class="text-left p-4 font-medium text-gray-600">Mata Pelajaran</th>
+          <th class="text-left p-4 font-medium text-gray-600">Jabatan</th>
+          <th class="text-center p-4 font-medium text-gray-600">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for guru in guru_list %}
+        <tr class="border-b hover:bg-gray-50">
+          <td class="p-4">
+            <div class="flex items-center gap-3">
+              {% if guru.photo %}
+              <img src="{{ url_for('static', filename='uploads/'+guru.photo) }}" class="w-10 h-10 rounded-full object-cover">
+              {% else %}
+              <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">{{ guru.nama[0] }}</div>
+              {% endif %}
+              <span class="font-medium">{{ guru.nama }}</span>
+            </div>
+          </td>
+          <td class="p-4 text-gray-500">{{ guru.nip or '-' }}</td>
+          <td class="p-4">{{ guru.mata_pelajaran or '-' }}</td>
+          <td class="p-4">{{ guru.jabatan or '-' }}</td>
+          <td class="p-4 text-center">
+            <a href="{{ url_for('admin.guru_edit', id=guru.id) }}" class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-edit"></i></a>
+            <a href="{{ url_for('admin.guru_hapus', id=guru.id) }}" class="text-red-500 hover:text-red-700" onclick="return confirm('Hapus guru ini?')"><i class="fas fa-trash"></i></a>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="p-8 text-center text-gray-400">Belum ada guru</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

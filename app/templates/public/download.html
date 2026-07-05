@@ -1,0 +1,35 @@
+{% extends "public/base.html" %}
+{% block title %}Download{% endblock %}
+{% block content %}
+<section class="bg-blue-600 py-16">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <h1 class="text-3xl font-bold text-white mb-3">Pusat Download</h1>
+    <p class="text-blue-100">Download dokumen dan formulir sekolah</p>
+  </div>
+</section>
+<section class="py-16">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="space-y-4">
+      {% for d in download_list %}
+      <div class="card p-5 flex items-center justify-between hover:shadow-md transition-all">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
+            <i class="fas fa-file-download text-xl"></i>
+          </div>
+          <div>
+            <p class="font-medium">{{ d.title }}</p>
+            {% if d.description %}<p class="text-sm text-gray-500">{{ d.description[:100] }}</p>{% endif %}
+            <span class="text-xs text-gray-400">{{ d.kategori }} · {{ d.downloads }}x download</span>
+          </div>
+        </div>
+        <a href="{{ url_for('public.download_file', id=d.id) }}" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-blue-700">
+          <i class="fas fa-download mr-1"></i> Download
+        </a>
+      </div>
+      {% else %}
+      <div class="text-center py-12 text-gray-400">Belum ada file tersedia</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

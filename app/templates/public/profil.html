@@ -1,0 +1,32 @@
+{% extends "public/base.html" %}
+{% block title %}Profil Sekolah{% endblock %}
+{% block content %}
+<section class="bg-blue-600 py-16">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <h1 class="text-3xl font-bold text-white mb-3">Profil Sekolah</h1>
+    <p class="text-blue-100">Mengenal lebih dekat {{ site_name }}</p>
+  </div>
+</section>
+<section class="py-16">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="prose max-w-none">
+      <h2 class="text-2xl font-bold mb-4">Sejarah Singkat</h2>
+      <p class="text-gray-600 leading-relaxed mb-8">{{ site_name }} berdiri dengan visi mencetak generasi penerus bangsa yang unggul dalam prestasi dan berkarakter mulia. Sekolah kami berkomitmen untuk memberikan pendidikan berkualitas dengan didukung tenaga pengajar profesional dan fasilitas modern.</p>
+      <h2 class="text-2xl font-bold mb-4">Visi & Misi</h2>
+      <div class="bg-blue-50 rounded-2xl p-6 mb-6">
+        <h3 class="font-semibold text-lg mb-2">Visi</h3>
+        <p class="text-gray-600">"Terwujudnya generasi yang beriman, bertaqwa, berprestasi, berkarakter mulia, dan berwawasan global."</p>
+      </div>
+      <div class="bg-green-50 rounded-2xl p-6 mb-8">
+        <h3 class="font-semibold text-lg mb-2">Misi</h3>
+        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+          <li>Menyelenggarakan pendidikan yang berkualitas dan berkarakter</li>
+          <li>Mengembangkan potensi siswa secara optimal</li>
+          <li>Menciptakan lingkungan belajar yang kondusif dan inovatif</li>
+          <li>Menjalin kerjasama dengan orang tua dan masyarakat</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

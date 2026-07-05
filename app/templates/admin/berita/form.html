@@ -1,0 +1,163 @@
+{% extends "admin/base.html" %}
+{% block title %}{% if berita %}Edit Berita{% else %}Tambah Berita{% endif %}{% endblock %}
+{% block page_title %}{% if berita %}Edit Berita{% else %}Tambah Berita{% endif %}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in max-w-4xl">
+    <form method="POST" class="space-y-6">
+        <!-- Basic Info -->
+        <div class="card p-6 space-y-5">
+            <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                <i class="fas fa-info-circle text-blue-600"></i> Informasi Dasar
+            </h3>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Judul Berita <span class="text-red-500">*</span></label>
+                <input type="text" name="title" value="{{ berita.title if berita else '' }}" required
+                       class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                       placeholder="Masukkan judul berita">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Kategori</label>
+                    <select name="kategori_id" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Pilih Kategori</option>
+                        {% for kat in kategori_list %}
+                        <option value="{{ kat.id }}" {{ 'selected' if berita and berita.kategori_id == kat.id }}>{{ kat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Status</label>
+                    <select name="status" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="draft" {{ 'selected' if not berita or berita.status == 'draft' }}>Draft</option>
+                        <option value="published" {{ 'selected' if berita and berita.status == 'published' }}>Published</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">URL Gambar Utama</label>
+                    <input type="text" name="featured_image" value="{{ berita.featured_image if berita else '' }}"
+                           class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="https://... atau /static/uploads/...">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Ringkasan (Excerpt)</label>
+                    <input type="text" name="excerpt" value="{{ berita.excerpt if berita else '' }}"
+                           class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Ringkasan singkat berita">
+                </div>
+            </div>
+        </div>
+
+        <!-- Content (Quill Editor) -->
+        <div class="card p-6 space-y-4">
+            <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                <i class="fas fa-pen-fancy text-blue-600"></i> Konten Berita <span class="text-red-500">*</span>
+            </h3>
+            <div class="prose-editor">
+                <div id="editor" style="min-height: 400px;">{{ berita.content|safe if berita else '' }}</div>
+                <textarea name="content" id="content" class="hidden" required></textarea>
+            </div>
+        </div>
+
+        <!-- SEO -->
+        <div class="card p-6 space-y-4">
+            <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                <i class="fas fa-search text-blue-600"></i> Pengaturan SEO
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Meta Description</label>
+                    <textarea name="meta_description" rows="3"
+                              class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              placeholder="Deskripsi untuk SEO">{{ berita.meta_description if berita else '' }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Meta Keywords</label>
+                    <input type="text" name="meta_keywords" value="{{ berita.meta_keywords if berita else '' }}"
+                           class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="keyword1, keyword2, keyword3">
+                </div>
+            </div>
+        </div>
+
+        <!-- Options -->
+        <div class="card p-6">
+            <div class="flex items-center gap-6">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="is_featured" {{ 'checked' if berita and berita.is_featured else '' }}
+                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <span class="text-sm font-medium text-gray-700">Jadikan Berita Unggulan</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="flex items-center justify-between">
+            <a href="{{ url_for('admin.berita_index') }}" class="text-gray-500 text-sm hover:text-gray-700">
+                <i class="fas fa-arrow-left mr-1"></i> Kembali
+            </a>
+            <div class="flex gap-3">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition-all inline-flex items-center gap-2">
+                    <i class="fas fa-save"></i>
+                    {% if berita %}Simpan Perubahan{% else %}Simpan Berita{% endif %}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Quill Editor CDN -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editor = document.getElementById('editor');
+    const contentField = document.getElementById('content');
+
+    const quill = new Quill(editor, {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'indent': '-1'}, { 'indent': '+1' }],
+                [{ 'align': [] }],
+                ['blockquote', 'code-block'],
+                ['link', 'image', 'video'],
+                ['clean']
+            ]
+        }
+    });
+
+    // Set initial content if editing
+    {% if berita and berita.content %}
+    // Content already rendered in the editor div
+    {% endif %}
+
+    // Update hidden textarea on form submit
+    document.querySelector('form').onsubmit = function() {
+        contentField.value = quill.root.innerHTML;
+        if (!contentField.value.trim() || contentField.value === '<p><br></p>') {
+            alert('Konten berita harus diisi!');
+            return false;
+        }
+        return true;
+    };
+});
+</script>
+<style>
+    .ql-editor { min-height: 350px; font-size: 15px; line-height: 1.7; }
+    .ql-toolbar { border-radius: 12px 12px 0 0; border-color: #e5e7eb !important; }
+    .ql-container { border-radius: 0 0 12px 12px; border-color: #e5e7eb !important; }
+    .prose-editor { border: 1px solid #e5e7eb; border-radius: 12px; }
+</style>
+{% endblock %}

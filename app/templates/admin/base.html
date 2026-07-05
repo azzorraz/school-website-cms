@@ -73,23 +73,24 @@
         .sidebar-section-btn .chevron { transition: transform 0.2s ease; }
         .sidebar-section-btn.expanded .chevron { transform: rotate(90deg); }
         .sidebar-submenu { 
-            @apply py-1.5; 
-            margin-left: 1.75rem; 
-            margin-right: 0.5rem; 
-            padding-left: 0.75rem; 
-            border-left: 2px solid #e5e7eb; 
+            @apply py-1; 
+            margin: 0 0.5rem;
+            padding: 0.25rem 0;
+            background: #f9fafb;
+            border-radius: 0.75rem;
         }
-        .dark .sidebar-submenu { border-left-color: #334155; }
+        .dark .sidebar-submenu { background: #0f172a; }
         .sidebar-submenu .sidebar-link { 
-            @apply rounded-lg py-1.5 gap-2.5; 
+            @apply rounded-lg py-2 gap-3 mx-2 px-3; 
             font-size: 0.8125rem; 
         }
         .sidebar-submenu .sidebar-link i { 
             @apply text-center; 
-            width: 1rem; 
-            font-size: 0.7rem; 
-            opacity: 0.7;
+            width: 1.125rem; 
+            font-size: 0.75rem; 
+            opacity: 0.6;
         }
+        .sidebar-submenu .sidebar-link:hover i { opacity: 0.9; }
         .sidebar-submenu .sidebar-link.active i { opacity: 1; }
         .stat-card { @apply bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all; }
         .dark .stat-card { background: #1e293b; border-color: #334155; }
@@ -150,7 +151,7 @@
                 </div>
 
                 <!-- Akademik -->
-                <div class="pt-1">
+                <div class="pt-3 pb-1">
                     <button onclick="toggleSection(this)" class="sidebar-section-btn {{ 'active expanded' if request.endpoint and (request.endpoint.startswith('admin.guru') or request.endpoint.startswith('admin.prestasi') or request.endpoint.startswith('admin.eskul') or request.endpoint.startswith('admin.ppdb')) }}">
                         <span><i class="fas fa-graduation-cap w-5 text-center mr-3"></i>Akademik</span>
                         <i class="fas fa-chevron-right text-xs chevron"></i>
@@ -172,7 +173,7 @@
                 </div>
 
                 <!-- Website -->
-                <div class="pt-1">
+                <div class="pt-3 pb-1">
                     <button onclick="toggleSection(this)" class="sidebar-section-btn {{ 'active expanded' if request.endpoint and (request.endpoint.startswith('admin.download') or request.endpoint.startswith('admin.testimoni') or request.endpoint.startswith('admin.faq')) }}">
                         <span><i class="fas fa-globe w-5 text-center mr-3"></i>Website</span>
                         <i class="fas fa-chevron-right text-xs chevron"></i>
@@ -191,7 +192,7 @@
                 </div>
 
                 <!-- Komunikasi -->
-                <div class="pt-1">
+                <div class="pt-3 pb-1">
                     <button onclick="toggleSection(this)" class="sidebar-section-btn {{ 'active expanded' if request.endpoint and request.endpoint.startswith('admin.kontak') }}">
                         <span><i class="fas fa-comments w-5 text-center mr-3"></i>Komunikasi</span>
                         <i class="fas fa-chevron-right text-xs chevron"></i>

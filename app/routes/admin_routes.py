@@ -157,7 +157,7 @@ def kategori_edit(id):
 @login_required
 def kategori_hapus(id):
     kategori = Kategori.query.get_or_404(id)
-    if kategori.berita.count() > 0:
+    if len(kategori.berita) > 0:
         flash(f'Tidak bisa menghapus kategori "{kategori.name}" karena masih memiliki berita!', 'error')
         return redirect(url_for('admin.kategori_index'))
     db.session.delete(kategori)

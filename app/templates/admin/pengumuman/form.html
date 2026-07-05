@@ -44,7 +44,7 @@
             </h3>
             <div class="prose-editor">
                 <div id="editor" style="min-height: 350px;">{{ pengumuman.content|safe if pengumuman else '' }}</div>
-                <textarea name="content" id="content" class="hidden" required></textarea>
+                <textarea name="content" id="content" class="hidden"></textarea>
             </div>
         </div>
 
@@ -68,26 +68,45 @@
 document.addEventListener('DOMContentLoaded', function() {
     const editor = document.getElementById('editor');
     const contentField = document.getElementById('content');
+    let quill = null;
 
-    const quill = new Quill(editor, {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'indent': '-1'}, { 'indent': '+1' }],
-                [{ 'align': [] }],
-                ['blockquote', 'code-block'],
-                ['link', 'image', 'video'],
-                ['clean']
-            ]
+    try {
+        if (typeof Quill !== 'undefined') {
+            quill = new Quill(editor, {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'indent': '-1'}, { 'indent': '+1' }],
+                        [{ 'align': [] }],
+                        ['blockquote', 'code-block'],
+                        ['link', 'image', 'video'],
+                        ['clean']
+                    ]
+                }
+            });
+        } else {
+            editor.style.display = 'none';
+            contentField.classList.remove('hidden');
+            contentField.style.minHeight = '300px';
+            contentField.style.padding = '1rem';
+            contentField.style.border = '1px solid #e5e7eb';
+            contentField.style.borderRadius = '12px';
+            contentField.style.width = '100%';
         }
-    });
+    } catch(e) {
+        console.error('Quill init error:', e);
+        editor.style.display = 'none';
+        contentField.classList.remove('hidden');
+    }
 
     document.querySelector('form').onsubmit = function() {
-        contentField.value = quill.root.innerHTML;
+        if (quill) {
+            contentField.value = quill.root.innerHTML;
+        }
         if (!contentField.value.trim() || contentField.value === '<p><br></p>') {
             alert('Konten pengumuman harus diisi!');
             return false;

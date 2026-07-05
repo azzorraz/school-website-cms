@@ -32,7 +32,7 @@ def create_app(config_class=Config):
     @app.context_processor
     def inject_globals():
         return {
-            'site_name': 'Sekolah Kita',
+            'site_name': 'SMP Negeri 1 Tawangsari',
             'site_description': 'Website Resmi Sekolah'
         }
 

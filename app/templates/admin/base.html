@@ -70,28 +70,53 @@
         .dark .sidebar-section-btn:hover { background: #1e293b; color: #e2e8f0; }
         .sidebar-section-btn.active { @apply text-blue-700 bg-blue-50; }
         .dark .sidebar-section-btn.active { background: #1e3a5f; color: #93c5fd; }
-        .sidebar-section-btn .chevron { transition: transform 0.2s ease; }
+        .sidebar-section-btn .chevron { transition: transform 0.25s ease; }
         .sidebar-section-btn.expanded .chevron { transform: rotate(90deg); }
-        .sidebar-submenu { 
-            @apply py-1; 
-            margin: 0 0.5rem;
-            padding: 0.25rem 0;
-            background: #f9fafb;
-            border-radius: 0.75rem;
+
+        /* Submenu: clean vertical listing */
+        .sidebar-submenu {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin: 4px 0 4px 1.25rem;      /* indent from parent */
+            padding: 4px 0 4px 0.75rem;
+            border-left: 1.5px solid #e5e7eb; /* vertical guide line */
+            overflow: hidden;
         }
-        .dark .sidebar-submenu { background: #0f172a; }
-        .sidebar-submenu .sidebar-link { 
-            @apply rounded-lg py-2 gap-3 mx-2 px-3; 
-            font-size: 0.8125rem; 
+        .dark .sidebar-submenu { border-left-color: #334155; }
+
+        /* Smooth expand / collapse */
+        .sidebar-submenu.hidden {
+            display: none;
         }
-        .sidebar-submenu .sidebar-link i { 
-            @apply text-center; 
-            width: 1.125rem; 
-            font-size: 0.75rem; 
-            opacity: 0.6;
+        .sidebar-submenu:not(.hidden) {
+            animation: submenuOpen 0.2s ease-out;
         }
-        .sidebar-submenu .sidebar-link:hover i { opacity: 0.9; }
+        @keyframes submenuOpen {
+            from { opacity: 0; transform: translateY(-4px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .sidebar-submenu .sidebar-link {
+            @apply rounded-lg gap-2.5 px-3;
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            width: 100%;
+        }
+        .sidebar-submenu .sidebar-link i {
+            @apply text-center;
+            width: 1rem;
+            font-size: 0.75rem;
+            opacity: 0.65;
+        }
+        .sidebar-submenu .sidebar-link:hover i { opacity: 1; }
         .sidebar-submenu .sidebar-link.active i { opacity: 1; }
+        .sidebar-submenu .sidebar-link.active {
+            @apply bg-blue-600 text-white shadow-sm;
+        }
         .stat-card { @apply bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all; }
         .dark .stat-card { background: #1e293b; border-color: #334155; }
         .card { @apply bg-white rounded-2xl border border-gray-100 shadow-sm; }
